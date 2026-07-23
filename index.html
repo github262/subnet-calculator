@@ -126,7 +126,6 @@
 </head>
 <body>
 
-<!-- TOP AD -->
 <div style="background:var(--background);padding:.5rem 0">
   <div class="container">
     <div class="ad-container ad-leaderboard" style="display:none" id="ad-top-desktop">
@@ -201,4 +200,423 @@
         </div>
         <div class="stats-grid">
           <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Total Hosts</div><div class="stat-value" id="totalHosts">-</div></div>
-          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Usable Hosts</div><div class="stat-value" id="usableHosts">-</div></
+          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Usable Hosts</div><div class="stat-value" id="usableHosts">-</div></div>
+          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">IP Class</div><div class="stat-value" id="ipClass">-</div></div>
+          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Network Bits</div><div class="stat-value" id="networkBits">-</div></div>
+          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Host Bits</div><div class="stat-value" id="hostBits">-</div></div>
+          <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Subnet Size</div><div class="stat-value" id="subnetSize">-</div></div>
+        </div>
+        <div class="card" style="margin-bottom:1.25rem"><h4 class="section-title">IP Address Properties</h4><div id="ipProperties"></div></div>
+        <div class="card" style="margin-bottom:1.25rem">
+          <h4 class="section-title">32-Bit Binary Breakdown</h4>
+          <div class="overflow-x">
+            <table class="bit-table">
+              <tr><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 1</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 2</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 3</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 4</td></tr>
+              <tr id="bitRow1"></tr><tr id="bitRow2"></tr><tr id="bitRow3"></tr><tr id="bitRow4"></tr>
+            </table>
+          </div>
+          <div class="legend"><span><span class="legend-dot" style="background:var(--success)"></span> Network bits</span><span><span class="legend-dot" style="background:var(--warning)"></span> Host bits</span></div>
+        </div>
+        <div class="card" style="margin-bottom:1.25rem"><h4 class="section-title">Subnet Division Analysis</h4><div class="subnet-info" id="subnetDivision"></div></div>
+        <div class="card" id="binaryDetails" style="display:none;margin-bottom:1.25rem">
+          <h4 class="section-title">Binary & Hexadecimal Details</h4>
+          <div class="overflow-x">
+            <table class="detail-table"><thead><tr><th>Field</th><th>Decimal</th><th>Binary (32-bit)</th><th>Hexadecimal</th></tr></thead><tbody id="binaryTableBody"></tbody></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="MID_CONTENT_RECTANGLE_SLOT"></ins></div></div>
+
+    <section id="how-it-works" class="card content-section">
+      <h2>How the Subnet Mask Calculator Works</h2>
+      <p>Our <strong>free subnet mask calculator</strong> performs all the complex binary math behind IPv4 subnetting instantly. Simply enter an IP address and either a CIDR prefix (like <code>/24</code>) or a dotted-decimal subnet mask (like <code>255.255.255.0</code>), and the tool computes:</p>
+      <ul>
+        <li><strong>Network Address</strong> — The base address of the subnet, found by ANDing the IP with the subnet mask</li>
+        <li><strong>Broadcast Address</strong> — The last address in the subnet, used to send data to all hosts</li>
+        <li><strong>First & Last Usable Host</strong> — The range of assignable IP addresses for devices</li>
+        <li><strong>Wildcard Mask</strong> — The inverse of the subnet mask, used in Cisco ACLs and routing protocols</li>
+        <li><strong>Binary Breakdown</strong> — A visual 32-bit representation showing network vs host bits</li>
+        <li><strong>Subnetting Analysis</strong> — Whether you're subnetting or supernetting relative to the default class mask</li>
+      </ul>
+      <p>The calculator supports all valid IPv4 addresses and CIDR ranges from <code>/1</code> to <code>/32</code>, including <code>/31</code> and <code>/32</code> point-to-point and host routes.</p>
+    </section>
+
+    <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="IN_CONTENT_2_RECTANGLE_SLOT"></ins></div></div>
+
+    <section id="subnet-guide" class="card content-section">
+      <h2>Complete Subnetting Guide</h2>
+      <h3>What is Subnetting?</h3>
+      <p><strong>Subnetting</strong> is the process of dividing a single network into multiple smaller networks (subnets). This improves network performance, enhances security, and makes IP address management more efficient. By borrowing bits from the host portion of an IP address, you create additional network bits, effectively splitting one large network into several smaller ones.</p>
+      <h3>IP Address Classes</h3>
+      <table><thead><tr><th>Class</th><th>First Octet Range</th><th>Default Mask</th><th>Default CIDR</th><th>Hosts per Network</th></tr></thead>
+      <tbody>
+        <tr><td>Class A</td><td>1 – 126</td><td>255.0.0.0</td><td>/8</td><td>16,777,214</td></tr>
+        <tr><td>Class B</td><td>128 – 191</td><td>255.255.0.0</td><td>/16</td><td>65,534</td></tr>
+        <tr><td>Class C</td><td>192 – 223</td><td>255.255.255.0</td><td>/24</td><td>254</td></tr>
+        <tr><td>Class D</td><td>224 – 239</td><td>Multicast</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>Class E</td><td>240 – 255</td><td>Experimental</td><td>N/A</td><td>N/A</td></tr>
+      </tbody></table>
+      <h3>Common Subnet Mask Reference Table</h3>
+      <table><thead><tr><th>CIDR</th><th>Subnet Mask</th><th>Total Hosts</th><th>Usable Hosts</th><th>Wildcard Mask</th></tr></thead>
+      <tbody>
+        <tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>0</td><td>0.0.0.0</td></tr>
+        <tr><td>/31</td><td>255.255.255.254</td><td>2</td><td>0</td><td>0.0.0.1</td></tr>
+        <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2</td><td>0.0.0.3</td></tr>
+        <tr><td>/29</td><td>255.255.255.248</td><td>8</td><td>6</td><td>0.0.0.7</td></tr>
+        <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td><td>0.0.0.15</td></tr>
+        <tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td><td>0.0.0.31</td></tr>
+        <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td><td>0.0.0.63</td></tr>
+        <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td><td>0.0.0.127</td></tr>
+        <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td><td>0.0.0.255</td></tr>
+        <tr><td>/23</td><td>255.255.254.0</td><td>512</td><td>510</td><td>0.0.1.255</td></tr>
+        <tr><td>/22</td><td>255.255.252.0</td><td>1,024</td><td>1,022</td><td>0.0.3.255</td></tr>
+        <tr><td>/16</td><td>255.255.0.0</td><td>65,536</td><td>65,534</td><td>0.0.255.255</td></tr>
+        <tr><td>/8</td><td>255.0.0.0</td><td>16,777,216</td><td>16,777,214</td><td>0.255.255.255</td></tr>
+      </tbody></table>
+      <h3>Subnetting Formula</h3>
+      <p>The fundamental formulas for subnetting are:</p>
+      <ul>
+        <li><strong>Number of subnets</strong> = 2<sup>(borrowed bits)</sup></li>
+        <li><strong>Hosts per subnet</strong> = 2<sup>(host bits)</sup> &minus; 2</li>
+        <li><strong>Block size</strong> = 256 &minus; subnet mask octet value (for that octet)</li>
+        <li><strong>Network address</strong> = IP Address AND Subnet Mask</li>
+        <li><strong>Broadcast address</strong> = Network Address OR Wildcard Mask</li>
+      </ul>
+    </section>
+
+    <section id="faq" class="card content-section">
+      <h2>Frequently Asked Questions</h2>
+      <h3>What is a subnet mask calculator?</h3>
+      <p>A <strong>subnet mask calculator</strong> is a network tool that automatically computes subnet details from an IP address and subnet mask or CIDR notation. It eliminates manual binary calculations and provides instant results including network address, broadcast address, usable IP range, wildcard mask, and binary representation.</p>
+      <h3>How do I calculate usable hosts in a subnet?</h3>
+      <p>Usable hosts = 2<sup>(host bits)</sup> &minus; 2. You subtract 2 because the network address (all host bits = 0) and broadcast address (all host bits = 1) cannot be assigned to individual devices. For example, a /24 subnet has 8 host bits, so usable hosts = 2<sup>8</sup> &minus; 2 = 254.</p>
+      <h3>What is CIDR notation?</h3>
+      <p><strong>CIDR</strong> (Classless Inter-Domain Routing) notation represents a subnet mask as a slash followed by the number of network bits. For example, <code>/24</code> means the first 24 bits are network bits, equivalent to subnet mask <code>255.255.255.0</code>. CIDR replaced the old classful networking system (A, B, C) and allows for more flexible address allocation.</p>
+      <h3>What is a wildcard mask?</h3>
+      <p>A <strong>wildcard mask</strong> is the bitwise inverse of a subnet mask. Where a subnet mask has 1s for network bits and 0s for host bits, a wildcard mask has 0s for network bits and 1s for host bits. It is commonly used in Cisco Access Control Lists (ACLs) and routing protocols like OSPF and EIGRP to specify which bits must match.</p>
+      <h3>What is the difference between subnetting and supernetting?</h3>
+      <p><strong>Subnetting</strong> borrows bits from the host portion to create more, smaller networks. <strong>Supernetting</strong> (or route aggregation/CIDR aggregation) does the opposite &mdash; it combines multiple smaller networks into one larger network by borrowing bits from the network portion. Our calculator detects which operation you're performing relative to the default class mask.</p>
+      <h3>Why do /31 and /32 subnets have 0 usable hosts?</h3>
+      <p>A <code>/31</code> subnet has only 2 total addresses with no room for network and broadcast addresses, so per RFC 3021 it is used for point-to-point links with both addresses usable. A <code>/32</code> is a single host route (loopback or specific host), so there are 0 usable hosts in the traditional sense.</p>
+      <h3>Is this subnet calculator free to use?</h3>
+      <p>Yes, our <strong>advanced subnet mask calculator</strong> is completely free to use with no registration required. All calculations are performed locally in your browser &mdash; your IP addresses are never sent to any server.</p>
+    </section>
+
+    <section id="related-tools" class="card content-section">
+      <h2>Related Networking Tools</h2>
+      <div class="tools-grid">
+        <div class="tool-card" onclick="alert('Coming soon!')"><div class="tool-icon">&#128208;</div><h4>Binary Calculator</h4><p>Convert between decimal, binary, and hexadecimal</p></div>
+        <div class="tool-card" onclick="alert('Coming soon!')"><div class="tool-icon">&#128225;</div><h4>IP Range Calculator</h4><p>Calculate IP ranges across multiple subnets</p></div>
+        <div class="tool-card" onclick="alert('Coming soon!')"><div class="tool-icon">&#128260;</div><h4>VLSM Calculator</h4><p>Variable Length Subnet Masking for efficient allocation</p></div>
+        <div class="tool-card" onclick="alert('Coming soon!')"><div class="tool-icon">&#128187;</div><h4>MAC Address Lookup</h4><p>Find vendor information from MAC addresses</p></div>
+      </div>
+    </section>
+
+    <div class="ad-container ad-leaderboard" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="BOTTOM_LEADERBOARD_SLOT"></ins></div></div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="ad-sticky-sidebar">
+      <div class="ad-container ad-halfpage" style="margin-bottom:1rem"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_HALFPAGE_SLOT"></ins></div></div>
+      <div class="ad-container ad-medium" style="margin-bottom:1rem"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_MEDIUM_SLOT"></ins></div></div>
+      <div class="card" style="margin-bottom:1rem">
+        <h4 style="margin-top:0">Quick Reference</h4>
+        <ul style="list-style:none;margin:0;padding:0;font-size:.85rem">
+          <li style="margin-bottom:.5rem"><a href="#how-it-works">How It Works</a></li>
+          <li style="margin-bottom:.5rem"><a href="#subnet-guide">Subnetting Guide</a></li>
+          <li style="margin-bottom:.5rem"><a href="#faq">FAQ</a></li>
+          <li style="margin-bottom:.5rem"><a href="#related-tools">Related Tools</a></li>
+        </ul>
+      </div>
+      <div class="ad-container ad-medium"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_MEDIUM_2_SLOT"></ins></div></div>
+    </div>
+  </aside>
+</div>
+
+<div class="ad-anchor" id="adAnchor"><div class="ad-container ad-mobile-leader" style="margin:0 auto;border:none"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="ANCHOR_MOBILE_SLOT"></ins></div></div></div>
+
+<footer>
+  <div class="footer-inner">
+    <div><h4>SubnetCalc Pro</h4><p style="color:#94a3b8;font-size:.85rem;line-height:1.6">Free professional-grade networking tools for IT professionals, network engineers, and students.</p></div>
+    <div><h4>Tools</h4><a href="#calculator">Subnet Calculator</a><a href="#">Binary Calculator</a><a href="#">IP Range Calculator</a><a href="#">VLSM Calculator</a></div>
+    <div><h4>Resources</h4><a href="#subnet-guide">Subnetting Guide</a><a href="#faq">FAQ</a><a href="#">CIDR Cheat Sheet</a><a href="#">Binary Conversion</a></div>
+    <div><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Policy</a><a href="#">Contact Us</a></div>
+  </div>
+  <div class="copyright">&copy; 2026 SubnetCalc Pro. All rights reserved. Free subnet mask calculator for IPv4 networks.</div>
+</footer>
+
+<script>
+let showBinary = false;
+
+function ipToInt(ip) {
+  var parts = ip.split('.');
+  return ((parseInt(parts[0]) << 24) + (parseInt(parts[1]) << 16) + (parseInt(parts[2]) << 8) + parseInt(parts[3])) >>> 0;
+}
+
+function intToIp(int) {
+  return ((int >>> 24) & 0xFF) + '.' + ((int >>> 16) & 0xFF) + '.' + ((int >>> 8) & 0xFF) + '.' + (int & 0xFF);
+}
+
+function intToBinary(int) {
+  return (int >>> 0).toString(2).padStart(32, '0');
+}
+
+function ipToBinary(ip) {
+  return ip.split('.').map(function(o) {
+    return parseInt(o).toString(2).padStart(8, '0');
+  }).join('.');
+}
+
+function cidrToMask(cidr) {
+  if (cidr === 0) return 0;
+  return ((0xFFFFFFFF << (32 - cidr)) & 0xFFFFFFFF) >>> 0;
+}
+
+function maskToCidr(mask) {
+  var cidr = 0;
+  var m = mask;
+  while (m & 0x80000000) {
+    cidr++;
+    m = (m << 1) & 0xFFFFFFFF;
+  }
+  return cidr;
+}
+
+function maskToIp(mask) {
+  return intToIp(mask);
+}
+
+function validateIP(ip) {
+  var parts = ip.split('.');
+  if (parts.length !== 4) return false;
+  return parts.every(function(p) {
+    var num = parseInt(p);
+    return !isNaN(num) && num >= 0 && num <= 255 && p === String(num);
+  });
+}
+
+function validateMask(mask) {
+  var parts = mask.split('.');
+  if (parts.length !== 4) return false;
+  var binary = parts.map(function(p) {
+    return parseInt(p).toString(2).padStart(8, '0');
+  }).join('');
+  return /^1*0*$/.test(binary);
+}
+
+function getIPClass(ip) {
+  var firstOctet = parseInt(ip.split('.')[0]);
+  if (firstOctet >= 1 && firstOctet <= 126) return 'A';
+  if (firstOctet >= 128 && firstOctet <= 191) return 'B';
+  if (firstOctet >= 192 && firstOctet <= 223) return 'C';
+  if (firstOctet >= 224 && firstOctet <= 239) return 'D (Multicast)';
+  if (firstOctet >= 240 && firstOctet <= 255) return 'E (Experimental)';
+  return 'Unknown';
+}
+
+function getIPProperties(ip, maskInt) {
+  var props = [];
+  var firstOctet = parseInt(ip.split('.')[0]);
+  var secondOctet = parseInt(ip.split('.')[1]);
+  var ipInt = ipToInt(ip);
+  var networkInt = ipInt & maskInt;
+  var broadcastInt = networkInt | (~maskInt >>> 0);
+
+  if ((firstOctet === 10) ||
+      (firstOctet === 172 && secondOctet >= 16 && secondOctet <= 31) ||
+      (firstOctet === 192 && secondOctet === 168)) {
+    props.push({ label: 'Private (RFC 1918)', class: 'tag-private' });
+  } else {
+    props.push({ label: 'Public', class: 'tag-public' });
+  }
+  if (firstOctet === 127) props.push({ label: 'Loopback', class: 'tag-loopback' });
+  if (firstOctet === 169 && secondOctet === 254) props.push({ label: 'Link-Local (APIPA)', class: 'tag-linklocal' });
+  if (firstOctet >= 224 && firstOctet <= 239) props.push({ label: 'Multicast', class: 'tag-multicast' });
+  if (ipInt === networkInt) props.push({ label: 'Network Address', class: 'tag-network' });
+  if (ipInt === broadcastInt) props.push({ label: 'Broadcast Address', class: 'tag-network' });
+  if (ipInt === 0) props.push({ label: 'Default Route', class: 'tag-default' });
+
+  return props;
+}
+
+function getSubnetDivision(cidr, ipClass) {
+  var classMap = { 'A': 8, 'B': 16, 'C': 24 };
+  var defaultMask = classMap[ipClass] || 0;
+
+  if (cidr < defaultMask) {
+    var borrowed = defaultMask - cidr;
+    var supernetHosts = Math.pow(2, 32 - cidr);
+    return 'Supernetting: Borrowed <code>' + borrowed + '</code> bit(s) from default class mask (/' + defaultMask + ').<br>Aggregated network size: <code>' + supernetHosts.toLocaleString() + '</code> total addresses.';
+  } else if (cidr > defaultMask) {
+    var borrowed = cidr - defaultMask;
+    var subnets = Math.pow(2, borrowed);
+    var hostsPerSubnet = Math.pow(2, 32 - cidr);
+    return 'Subnetting: Borrowed <code>' + borrowed + '</code> host bit(s) from default class mask (/' + defaultMask + ').<br>Possible subnets: <code>' + subnets.toLocaleString() + '</code><br>Hosts per subnet: <code>' + hostsPerSubnet.toLocaleString() + '</code> total / <code>' + Math.max(0, hostsPerSubnet - 2).toLocaleString() + '</code> usable';
+  } else {
+    return 'Default classful mask (/' + defaultMask + '). No subnetting or supernetting applied.';
+  }
+}
+
+function renderBitBreakdown(ipInt, cidr) {
+  var binary = intToBinary(ipInt);
+  var rows = [
+    document.getElementById('bitRow1'),
+    document.getElementById('bitRow2'),
+    document.getElementById('bitRow3'),
+    document.getElementById('bitRow4')
+  ];
+  rows.forEach(function(r) { r.innerHTML = ''; });
+
+  for (var i = 0; i < 32; i++) {
+    var bit = binary[i];
+    var isNetwork = i < cidr;
+    var cell = document.createElement('td');
+    cell.textContent = bit;
+    cell.className = isNetwork ? 'bit-network' : 'bit-host';
+    rows[Math.floor(i / 8)].appendChild(cell);
+  }
+}
+
+function toggleBinary() {
+  showBinary = !showBinary;
+  var el = document.getElementById('binaryDetails');
+  if (el) el.style.display = showBinary ? 'block' : 'none';
+}
+
+function pushAds() {
+  try {
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  } catch (e) {}
+}
+
+function calculate() {
+  var ipInput = document.getElementById('ipInput').value.trim();
+  var cidrSelect = document.getElementById('cidrSelect');
+  var maskInput = document.getElementById('maskInput').value.trim();
+  var errorArea = document.getElementById('errorArea');
+  var resultsArea = document.getElementById('resultsArea');
+
+  errorArea.style.display = 'none';
+  errorArea.textContent = '';
+
+  if (!validateIP(ipInput)) {
+    errorArea.textContent = 'Invalid IP address. Use dotted decimal format (e.g., 192.168.1.1).';
+    errorArea.style.display = 'block';
+    resultsArea.style.display = 'none';
+    return;
+  }
+
+  var cidr, maskInt;
+
+  if (maskInput && validateMask(maskInput)) {
+    maskInt = ipToInt(maskInput);
+    cidr = maskToCidr(maskInt);
+    cidrSelect.value = String(cidr);
+  } else if (cidrSelect.value) {
+    cidr = parseInt(cidrSelect.value);
+    maskInt = cidrToMask(cidr);
+    document.getElementById('maskInput').value = maskToIp(maskInt);
+  } else {
+    errorArea.textContent = 'Please provide a valid subnet mask or CIDR prefix.';
+    errorArea.style.display = 'block';
+    resultsArea.style.display = 'none';
+    return;
+  }
+
+  var ipInt = ipToInt(ipInput);
+  var networkInt = ipInt & maskInt;
+  var broadcastInt = networkInt | (~maskInt >>> 0);
+  var wildcardInt = ~maskInt >>> 0;
+
+  var totalHosts = Math.pow(2, 32 - cidr);
+  var usableHosts = cidr >= 31 ? 0 : totalHosts - 2;
+
+  var firstHostInt = cidr >= 31 ? networkInt : networkInt + 1;
+  var lastHostInt = cidr >= 31 ? broadcastInt : broadcastInt - 1;
+
+  var ipClass = getIPClass(ipInput);
+  var props = getIPProperties(ipInput, maskInt);
+
+  document.getElementById('networkAddr').textContent = intToIp(networkInt);
+  document.getElementById('networkBinary').textContent = ipToBinary(intToIp(networkInt));
+  document.getElementById('broadcastAddr').textContent = intToIp(broadcastInt);
+  document.getElementById('broadcastBinary').textContent = ipToBinary(intToIp(broadcastInt));
+  document.getElementById('subnetMask').textContent = maskToIp(maskInt);
+  document.getElementById('maskBinary').textContent = ipToBinary(maskToIp(maskInt));
+  document.getElementById('wildcardMask').textContent = maskToIp(wildcardInt);
+  document.getElementById('wildcardBinary').textContent = ipToBinary(maskToIp(wildcardInt));
+  document.getElementById('firstHost').textContent = cidr >= 31 ? 'N/A' : intToIp(firstHostInt);
+  document.getElementById('firstHostBinary').textContent = cidr >= 31 ? '-' : ipToBinary(intToIp(firstHostInt));
+  document.getElementById('lastHost').textContent = cidr >= 31 ? 'N/A' : intToIp(lastHostInt);
+  document.getElementById('lastHostBinary').textContent = cidr >= 31 ? '-' : ipToBinary(intToIp(lastHostInt));
+
+  document.getElementById('totalHosts').textContent = totalHosts.toLocaleString();
+  document.getElementById('usableHosts').textContent = usableHosts.toLocaleString();
+  document.getElementById('ipClass').textContent = ipClass;
+  document.getElementById('networkBits').textContent = cidr;
+  document.getElementById('hostBits').textContent = 32 - cidr;
+  document.getElementById('subnetSize').textContent = '/' + cidr;
+
+  var propsContainer = document.getElementById('ipProperties');
+  propsContainer.innerHTML = props.map(function(p) {
+    return '<span class="tag ' + p.class + '">' + p.label + '</span>';
+  }).join('');
+
+  renderBitBreakdown(ipInt, cidr);
+  document.getElementById('subnetDivision').innerHTML = getSubnetDivision(cidr, ipClass.charAt(0));
+
+  var fields = [
+    { name: 'IP Address', val: ipInt },
+    { name: 'Subnet Mask', val: maskInt },
+    { name: 'Network Address', val: networkInt },
+    { name: 'Broadcast Address', val: broadcastInt },
+    { name: 'Wildcard Mask', val: wildcardInt },
+    { name: 'First Host', val: firstHostInt },
+    { name: 'Last Host', val: lastHostInt }
+  ];
+
+  document.getElementById('binaryTableBody').innerHTML = fields.map(function(f) {
+    var hex = '0x' + (f.val >>> 0).toString(16).toUpperCase().padStart(8, '0');
+    return '<tr><td>' + f.name + '</td><td>' + intToIp(f.val) + '</td><td>' + intToBinary(f.val) + '</td><td>' + hex + '</td></tr>';
+  }).join('');
+
+  resultsArea.style.display = 'block';
+  pushAds();
+}
+
+document.getElementById('cidrSelect').addEventListener('change', function() {
+  var cidr = parseInt(this.value);
+  document.getElementById('maskInput').value = maskToIp(cidrToMask(cidr));
+});
+
+document.getElementById('maskInput').addEventListener('input', function() {
+  if (validateMask(this.value)) {
+    var cidr = maskToCidr(ipToInt(this.value));
+    document.getElementById('cidrSelect').value = String(cidr);
+  }
+});
+
+document.getElementById('ipInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') calculate();
+});
+
+document.getElementById('maskInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') calculate();
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  calculate();
+  pushAds();
+  if (window.innerWidth >= 769) {
+    document.getElementById('ad-top-desktop').style.display = 'flex';
+  }
+  setTimeout(function() {
+    document.getElementById('adAnchor').classList.add('visible');
+    pushAds();
+  }, 3000);
+});
+</script>
+</body>
+</html>
