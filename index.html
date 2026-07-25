@@ -213,4 +213,625 @@ footer .copyright{text-align:center;margin-top:2rem;padding-top:1.5rem;border-to
           <div class="results-grid">
             <div class="card result-card" style="margin-bottom:0"><h4>Network Address</h4><div class="result-value" id="networkAddr">-</div><div class="result-binary" id="networkBinary">-</div></div>
             <div class="card result-card" style="margin-bottom:0"><h4>Broadcast Address</h4><div class="result-value" id="broadcastAddr">-</div><div class="result-binary" id="broadcastBinary">-</div></div>
-            <div class="card result-card" style="margin-bottom:0"><h4>Subnet Mask</h4><div class="result-value" id="subnetMask">-
+            <div class="card result-card" style="margin-bottom:0"><h4>Subnet Mask</h4><div class="result-value" id="subnetMask">-</div><div class="result-binary" id="maskBinary">-</div></div>
+            <div class="card result-card" style="margin-bottom:0"><h4>Wildcard Mask</h4><div class="result-value" id="wildcardMask">-</div><div class="result-binary" id="wildcardBinary">-</div></div>
+            <div class="card result-card" style="margin-bottom:0"><h4>First Usable Host</h4><div class="result-value" id="firstHost">-</div><div class="result-binary" id="firstHostBinary">-</div></div>
+            <div class="card result-card" style="margin-bottom:0"><h4>Last Usable Host</h4><div class="result-value" id="lastHost">-</div><div class="result-binary" id="lastHostBinary">-</div></div>
+          </div>
+          <div class="stats-grid">
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Total Hosts</div><div class="stat-value" id="totalHosts">-</div></div>
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Usable Hosts</div><div class="stat-value" id="usableHosts">-</div></div>
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">IP Class</div><div class="stat-value" id="ipClass">-</div></div>
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Network Bits</div><div class="stat-value" id="networkBits">-</div></div>
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Host Bits</div><div class="stat-value" id="hostBits">-</div></div>
+            <div class="card stat-box" style="margin-bottom:0"><div class="stat-label">Subnet Size</div><div class="stat-value" id="subnetSize">-</div></div>
+          </div>
+          <div class="card" style="margin-bottom:1.25rem"><h4 class="section-title">IP Address Properties</h4><div id="ipProperties"></div></div>
+          <div class="card" style="margin-bottom:1.25rem">
+            <h4 class="section-title">32-Bit Binary Breakdown</h4>
+            <div class="overflow-x">
+              <table class="bit-table">
+                <tr><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 1</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 2</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 3</td><td colspan="8" style="font-weight:700;background:var(--primary-light);color:var(--primary-dark)">Octet 4</td></tr>
+                <tr id="bitRow1"></tr><tr id="bitRow2"></tr><tr id="bitRow3"></tr><tr id="bitRow4"></tr>
+              </table>
+            </div>
+            <div class="legend"><span><span class="legend-dot" style="background:var(--success)"></span> Network bits</span><span><span class="legend-dot" style="background:var(--warning)"></span> Host bits</span></div>
+          </div>
+          <div class="card" style="margin-bottom:1.25rem"><h4 class="section-title">Subnet Division Analysis</h4><div class="subnet-info" id="subnetDivision"></div></div>
+          <div class="card" id="binaryDetails" style="display:none;margin-bottom:1.25rem">
+            <h4 class="section-title">Binary & Hexadecimal Details</h4>
+            <div class="overflow-x">
+              <table class="detail-table"><thead><tr><th>Field</th><th>Decimal</th><th>Binary (32-bit)</th><th>Hexadecimal</th></tr></thead><tbody id="binaryTableBody"></tbody></table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="MID_CONTENT_RECTANGLE_SLOT"></ins></div></div>
+
+      <section class="card content-section">
+        <h2>How the Subnet Mask Calculator Works</h2>
+        <p>Our <strong>free subnet mask calculator</strong> performs all the complex binary math behind IPv4 subnetting instantly. Simply enter an IP address and either a CIDR prefix (like <code>/24</code>) or a dotted-decimal subnet mask (like <code>255.255.255.0</code>), and the tool computes network address, broadcast address, usable IP range, wildcard mask, binary breakdown, and subnetting analysis.</p>
+        <p>The calculator supports all valid IPv4 addresses and CIDR ranges from <code>/1</code> to <code>/32</code>, including <code>/31</code> and <code>/32</code> point-to-point and host routes. All calculations run locally in your browser for privacy and speed.</p>
+      </section>
+
+      <section class="card content-section">
+        <h2>Related Networking Tools</h2>
+        <div class="tools-grid">
+          <div class="tool-card" onclick="showPage('subnet-guide')"><div class="tool-icon">&#128208;</div><h4>Subnetting Guide</h4><p>Complete guide to IP subnetting and CIDR</p></div>
+          <div class="tool-card" onclick="showPage('faq')"><div class="tool-icon">&#10067;</div><h4>FAQ</h4><p>Frequently asked questions about subnetting</p></div>
+          <div class="tool-card" onclick="showPage('contact')"><div class="tool-icon">&#9993;</div><h4>Contact Us</h4><p>Get in touch with questions or feedback</p></div>
+          <div class="tool-card" onclick="alert('Coming soon!')"><div class="tool-icon">&#128260;</div><h4>VLSM Calculator</h4><p>Variable Length Subnet Masking tool</p></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- HOW IT WORKS PAGE -->
+    <div id="page-how-it-works" class="page-section">
+      <div class="card content-section">
+        <h2>How the Subnet Mask Calculator Works</h2>
+        <p>Our <strong>free subnet mask calculator</strong> performs all the complex binary math behind IPv4 subnetting instantly. Simply enter an IP address and either a CIDR prefix (like <code>/24</code>) or a dotted-decimal subnet mask (like <code>255.255.255.0</code>), and the tool computes:</p>
+        <ul>
+          <li><strong>Network Address</strong> — The base address of the subnet, found by ANDing the IP with the subnet mask</li>
+          <li><strong>Broadcast Address</strong> — The last address in the subnet, used to send data to all hosts</li>
+          <li><strong>First & Last Usable Host</strong> — The range of assignable IP addresses for devices</li>
+          <li><strong>Wildcard Mask</strong> — The inverse of the subnet mask, used in Cisco ACLs and routing protocols</li>
+          <li><strong>Binary Breakdown</strong> — A visual 32-bit representation showing network vs host bits</li>
+          <li><strong>Subnetting Analysis</strong> — Whether you are subnetting or supernetting relative to the default class mask</li>
+        </ul>
+        <p>The calculator supports all valid IPv4 addresses and CIDR ranges from <code>/1</code> to <code>/32</code>, including <code>/31</code> and <code>/32</code> point-to-point and host routes. All calculations run locally in your browser for privacy and speed.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="HOWITWORKS_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- SUBNETTING GUIDE PAGE -->
+    <div id="page-subnet-guide" class="page-section">
+      <div class="card content-section">
+        <h2>Complete Subnetting Guide</h2>
+        <h3>What is Subnetting?</h3>
+        <p><strong>Subnetting</strong> is the process of dividing a single network into multiple smaller networks (subnets). This improves network performance, enhances security, and makes IP address management more efficient. By borrowing bits from the host portion of an IP address, you create additional network bits, effectively splitting one large network into several smaller ones.</p>
+        <h3>IP Address Classes</h3>
+        <table><thead><tr><th>Class</th><th>First Octet Range</th><th>Default Mask</th><th>Default CIDR</th><th>Hosts per Network</th></tr></thead>
+        <tbody>
+          <tr><td>Class A</td><td>1 &ndash; 126</td><td>255.0.0.0</td><td>/8</td><td>16,777,214</td></tr>
+          <tr><td>Class B</td><td>128 &ndash; 191</td><td>255.255.0.0</td><td>/16</td><td>65,534</td></tr>
+          <tr><td>Class C</td><td>192 &ndash; 223</td><td>255.255.255.0</td><td>/24</td><td>254</td></tr>
+          <tr><td>Class D</td><td>224 &ndash; 239</td><td>Multicast</td><td>N/A</td><td>N/A</td></tr>
+          <tr><td>Class E</td><td>240 &ndash; 255</td><td>Experimental</td><td>N/A</td><td>N/A</td></tr>
+        </tbody></table>
+        <h3>Common Subnet Mask Reference Table</h3>
+        <table><thead><tr><th>CIDR</th><th>Subnet Mask</th><th>Total Hosts</th><th>Usable Hosts</th><th>Wildcard Mask</th></tr></thead>
+        <tbody>
+          <tr><td>/32</td><td>255.255.255.255</td><td>1</td><td>0</td><td>0.0.0.0</td></tr>
+          <tr><td>/31</td><td>255.255.255.254</td><td>2</td><td>0</td><td>0.0.0.1</td></tr>
+          <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2</td><td>0.0.0.3</td></tr>
+          <tr><td>/29</td><td>255.255.255.248</td><td>8</td><td>6</td><td>0.0.0.7</td></tr>
+          <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td><td>0.0.0.15</td></tr>
+          <tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td><td>0.0.0.31</td></tr>
+          <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td><td>0.0.0.63</td></tr>
+          <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td><td>0.0.0.127</td></tr>
+          <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td><td>0.0.0.255</td></tr>
+          <tr><td>/23</td><td>255.255.254.0</td><td>512</td><td>510</td><td>0.0.1.255</td></tr>
+          <tr><td>/22</td><td>255.255.252.0</td><td>1,024</td><td>1,022</td><td>0.0.3.255</td></tr>
+          <tr><td>/16</td><td>255.255.0.0</td><td>65,536</td><td>65,534</td><td>0.0.255.255</td></tr>
+          <tr><td>/8</td><td>255.0.0.0</td><td>16,777,216</td><td>16,777,214</td><td>0.255.255.255</td></tr>
+        </tbody></table>
+        <h3>Subnetting Formula</h3>
+        <p>The fundamental formulas for subnetting are:</p>
+        <ul>
+          <li><strong>Number of subnets</strong> = 2<sup>(borrowed bits)</sup></li>
+          <li><strong>Hosts per subnet</strong> = 2<sup>(host bits)</sup> &minus; 2</li>
+          <li><strong>Block size</strong> = 256 &minus; subnet mask octet value (for that octet)</li>
+          <li><strong>Network address</strong> = IP Address AND Subnet Mask</li>
+          <li><strong>Broadcast address</strong> = Network Address OR Wildcard Mask</li>
+        </ul>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="GUIDE_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- FAQ PAGE -->
+    <div id="page-faq" class="page-section">
+      <div class="card content-section">
+        <h2>Frequently Asked Questions</h2>
+        <h3>What is a subnet mask calculator?</h3>
+        <p>A <strong>subnet mask calculator</strong> is a network tool that automatically computes subnet details from an IP address and subnet mask or CIDR notation. It eliminates manual binary calculations and provides instant results including network address, broadcast address, usable IP range, wildcard mask, and binary representation.</p>
+        <h3>How do I calculate usable hosts in a subnet?</h3>
+        <p>Usable hosts = 2<sup>(host bits)</sup> &minus; 2. You subtract 2 because the network address (all host bits = 0) and broadcast address (all host bits = 1) cannot be assigned to individual devices. For example, a /24 subnet has 8 host bits, so usable hosts = 2<sup>8</sup> &minus; 2 = 254.</p>
+        <h3>What is CIDR notation?</h3>
+        <p><strong>CIDR</strong> (Classless Inter-Domain Routing) notation represents a subnet mask as a slash followed by the number of network bits. For example, <code>/24</code> means the first 24 bits are network bits, equivalent to subnet mask <code>255.255.255.0</code>. CIDR replaced the old classful networking system (A, B, C) and allows for more flexible address allocation.</p>
+        <h3>What is a wildcard mask?</h3>
+        <p>A <strong>wildcard mask</strong> is the bitwise inverse of a subnet mask. Where a subnet mask has 1s for network bits and 0s for host bits, a wildcard mask has 0s for network bits and 1s for host bits. It is commonly used in Cisco Access Control Lists (ACLs) and routing protocols like OSPF and EIGRP to specify which bits must match.</p>
+        <h3>What is the difference between subnetting and supernetting?</h3>
+        <p><strong>Subnetting</strong> borrows bits from the host portion to create more, smaller networks. <strong>Supernetting</strong> (or route aggregation/CIDR aggregation) does the opposite &mdash; it combines multiple smaller networks into one larger network by borrowing bits from the network portion. Our calculator detects which operation you are performing relative to the default class mask.</p>
+        <h3>Why do /31 and /32 subnets have 0 usable hosts?</h3>
+        <p>A <code>/31</code> subnet has only 2 total addresses with no room for network and broadcast addresses, so per RFC 3021 it is used for point-to-point links with both addresses usable. A <code>/32</code> is a single host route (loopback or specific host), so there are 0 usable hosts in the traditional sense.</p>
+        <h3>Is this subnet calculator free to use?</h3>
+        <p>Yes, our <strong>advanced subnet mask calculator</strong> is completely free to use with no registration required. All calculations are performed locally in your browser &mdash; your IP addresses are never sent to any server.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="FAQ_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="page-section">
+      <div class="card">
+        <h2 style="margin-top:0">Contact Us</h2>
+        <p style="color:var(--text-secondary);margin-bottom:1.5rem">Have questions, feedback, or suggestions? We would love to hear from you. Fill out the form below and we will get back to you as soon as possible.</p>
+        <form class="contact-form" onsubmit="handleContactSubmit(event)">
+          <div>
+            <label for="contactName">Full Name *</label>
+            <input type="text" id="contactName" name="name" placeholder="John Doe" required>
+          </div>
+          <div>
+            <label for="contactEmail">Email Address *</label>
+            <input type="email" id="contactEmail" name="email" placeholder="john@example.com" required>
+          </div>
+          <div>
+            <label for="contactSubject">Subject *</label>
+            <input type="text" id="contactSubject" name="subject" placeholder="Question about subnetting" required>
+          </div>
+          <div>
+            <label for="contactMessage">Message *</label>
+            <textarea id="contactMessage" name="message" placeholder="Your message here..." required></textarea>
+          </div>
+          <div>
+            <label style="display:flex;align-items:center;gap:.5rem;font-weight:400;cursor:pointer">
+              <input type="checkbox" id="contactConsent" required>
+              <span style="font-size:.85rem">I agree to the <a href="#" onclick="showPage('privacy');return false">Privacy Policy</a> and consent to having my data processed.</span>
+            </label>
+          </div>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+        <div class="contact-info">
+          <h3>Other Ways to Reach Us</h3>
+          <p><strong>Email:</strong> <a href="mailto:contact@subnetcalcpro.com">contact@subnetcalcpro.com</a></p>
+          <p><strong>Business Hours:</strong> Monday &ndash; Friday, 9:00 AM &ndash; 5:00 PM EST</p>
+          <p><strong>Response Time:</strong> We typically respond within 24-48 hours.</p>
+          <p><strong>Address:</strong> SubnetCalc Pro, 123 Tech Street, Suite 456, San Francisco, CA 94102, USA</p>
+        </div>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="CONTACT_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- PRIVACY POLICY PAGE -->
+    <div id="page-privacy" class="page-section">
+      <div class="card legal-content">
+        <h2>Privacy Policy</h2>
+        <p><strong>Last Updated:</strong> July 23, 2026</p>
+        <p>At SubnetCalc Pro, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our subnet calculator tool.</p>
+        <h3>1. Information We Collect</h3>
+        <p><strong>Personal Information:</strong> We may collect personal information that you voluntarily provide to us when you contact us through our contact form, such as your name, email address, and any other information you choose to provide.</p>
+        <p><strong>Non-Personal Information:</strong> We automatically collect certain non-personal information when you visit our website, including your browser type, operating system, IP address, access times, and the pages you have viewed directly before and after accessing the website.</p>
+        <p><strong>IP Addresses in Calculator:</strong> Our subnet calculator processes IP addresses entirely within your browser. We do not transmit, store, or log any IP addresses you enter into the calculator.</p>
+        <h3>2. Use of Your Information</h3>
+        <p>We may use the information we collect to:</p>
+        <ul>
+          <li>Respond to your inquiries and provide customer support</li>
+          <li>Improve our website and services</li>
+          <li>Monitor and analyze usage and trends to improve user experience</li>
+          <li>Display relevant advertisements through Google AdSense</li>
+          <li>Prevent fraudulent transactions and monitor against theft</li>
+        </ul>
+        <h3>3. Cookies and Tracking Technologies</h3>
+        <p>We use cookies and similar tracking technologies to track activity on our website and store certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+        <p><strong>Google AdSense:</strong> We use Google AdSense to serve advertisements. Google uses cookies to serve ads based on your prior visits to our website or other websites. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank">Google Ads Settings</a>.</p>
+        <h3>4. Third-Party Disclosure</h3>
+        <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties except as described in this Privacy Policy. This does not include trusted third parties who assist us in operating our website, conducting our business, or serving our users, so long as those parties agree to keep this information confidential.</p>
+        <h3>5. Data Security</h3>
+        <p>We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
+        <h3>6. Your Rights</h3>
+        <p>Depending on your location, you may have the right to:</p>
+        <ul>
+          <li>Access the personal information we hold about you</li>
+          <li>Request correction of inaccurate information</li>
+          <li>Request deletion of your personal information</li>
+          <li>Object to processing of your personal information</li>
+          <li>Request restriction of processing your personal information</li>
+        </ul>
+        <h3>7. Childrens Privacy</h3>
+        <p>Our website is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.</p>
+        <h3>8. Changes to This Privacy Policy</h3>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
+        <h3>9. Contact Us</h3>
+        <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@subnetcalcpro.com">privacy@subnetcalcpro.com</a>.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="PRIVACY_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- TERMS OF SERVICE PAGE -->
+    <div id="page-terms" class="page-section">
+      <div class="card legal-content">
+        <h2>Terms of Service</h2>
+        <p><strong>Last Updated:</strong> July 23, 2026</p>
+        <p>Please read these Terms of Service carefully before using the SubnetCalc Pro website and subnet calculator tool.</p>
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing or using our website, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access the website or use our services.</p>
+        <h3>2. Use of Our Service</h3>
+        <p>SubnetCalc Pro provides a free online subnet calculator tool for IPv4 network calculations. You may use our calculator for personal, educational, and commercial purposes, subject to these terms.</p>
+        <p><strong>Prohibited Uses:</strong> You agree not to use our website or services for any unlawful purpose or in any way that could damage, disable, overburden, or impair our servers or networks.</p>
+        <h3>3. Intellectual Property</h3>
+        <p>The content, features, and functionality of our website, including but not limited to text, graphics, logos, icons, images, audio clips, digital downloads, data compilations, and software, are the property of SubnetCalc Pro and are protected by international copyright, trademark, and other intellectual property laws.</p>
+        <h3>4. Accuracy of Calculations</h3>
+        <p>While we strive to provide accurate subnet calculations, we make no warranties about the accuracy, reliability, or completeness of the information provided. You acknowledge that any reliance on the calculator output is at your own risk. Always verify critical network configurations independently.</p>
+        <h3>5. Disclaimer of Warranties</h3>
+        <p>Our website and services are provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied. We disclaim all warranties, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.</p>
+        <h3>6. Limitation of Liability</h3>
+        <p>In no event shall SubnetCalc Pro, its directors, employees, partners, agents, suppliers, or affiliates be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+        <h3>7. Third-Party Links and Advertising</h3>
+        <p>Our website may contain links to third-party websites or services that are not owned or controlled by SubnetCalc Pro. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party websites or services.</p>
+        <p>We display advertisements through Google AdSense. Your interactions with these advertisements are governed by the advertiser's terms and policies.</p>
+        <h3>8. Termination</h3>
+        <p>We may terminate or suspend your access to our website immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms of Service.</p>
+        <h3>9. Governing Law</h3>
+        <p>These Terms shall be governed and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions.</p>
+        <h3>10. Changes to Terms</h3>
+        <p>We reserve the right to modify or replace these Terms at any time. It is your responsibility to review these Terms periodically for changes.</p>
+        <h3>11. Contact Us</h3>
+        <p>If you have any questions about these Terms of Service, please contact us at <a href="mailto:legal@subnetcalcpro.com">legal@subnetcalcpro.com</a>.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="TERMS_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- COOKIE POLICY PAGE -->
+    <div id="page-cookies" class="page-section">
+      <div class="card legal-content">
+        <h2>Cookie Policy</h2>
+        <p><strong>Last Updated:</strong> July 23, 2026</p>
+        <p>This Cookie Policy explains how SubnetCalc Pro uses cookies and similar technologies on our website.</p>
+        <h3>What Are Cookies?</h3>
+        <p>Cookies are small text files that are stored on your computer or mobile device when you visit a website. They are widely used to make websites work more efficiently and provide information to the website owners.</p>
+        <h3>How We Use Cookies</h3>
+        <p>We use cookies for the following purposes:</p>
+        <ul>
+          <li><strong>Essential Cookies:</strong> Necessary for the website to function properly. These cannot be disabled.</li>
+          <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website by collecting and reporting information anonymously.</li>
+          <li><strong>Advertising Cookies:</strong> Used by Google AdSense to deliver relevant advertisements and measure their effectiveness.</li>
+          <li><strong>Preference Cookies:</strong> Remember your settings and preferences for a better user experience.</li>
+        </ul>
+        <h3>Third-Party Cookies</h3>
+        <p>We use services from third parties that may also set cookies:</p>
+        <ul>
+          <li><strong>Google AdSense:</strong> Used for displaying advertisements. Learn more at <a href="https://policies.google.com/technologies/ads" target="_blank">Google Advertising Policies</a>.</li>
+          <li><strong>Google Analytics:</strong> Used for website traffic analysis. Learn more at <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</li>
+        </ul>
+        <h3>Managing Cookies</h3>
+        <p>Most web browsers allow you to control cookies through their settings. You can usually find these settings in the "Options" or "Preferences" menu of your browser. You can delete existing cookies and block new cookies, but this may affect the functionality of our website.</p>
+        <h3>Contact Us</h3>
+        <p>If you have any questions about our Cookie Policy, please contact us at <a href="mailto:privacy@subnetcalcpro.com">privacy@subnetcalcpro.com</a>.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="COOKIES_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <!-- DISCLAIMER PAGE -->
+    <div id="page-disclaimer" class="page-section">
+      <div class="card legal-content">
+        <h2>Disclaimer</h2>
+        <p><strong>Last Updated:</strong> July 23, 2026</p>
+        <h3>General Disclaimer</h3>
+        <p>The information provided by SubnetCalc Pro on our website is for general informational and educational purposes only. All information on the site is provided in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.</p>
+        <h3>Network Configuration Disclaimer</h3>
+        <p>Our subnet calculator is designed to assist with network planning and education. However, <strong>network configurations should always be verified by qualified network engineers before deployment in production environments</strong>. We are not responsible for any network outages, security breaches, or other issues resulting from the use of our calculator output.</p>
+        <h3>External Links Disclaimer</h3>
+        <p>Our website may contain links to external websites that are not provided or maintained by us. We do not guarantee the accuracy, relevance, timeliness, or completeness of any information on these external websites.</p>
+        <h3>Advertising Disclaimer</h3>
+        <p>We display third-party advertisements on our website through Google AdSense. We do not endorse any products or services advertised. Your interactions with advertisers are solely between you and the advertiser.</p>
+        <h3>Limitation of Liability</h3>
+        <p>Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site.</p>
+        <h3>Contact</h3>
+        <p>If you have any questions about this disclaimer, please contact us at <a href="mailto:contact@subnetcalcpro.com">contact@subnetcalcpro.com</a>.</p>
+      </div>
+      <div class="ad-container ad-rectangle" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="DISCLAIMER_RECTANGLE_SLOT"></ins></div></div>
+    </div>
+
+    <div class="ad-container ad-leaderboard" style="margin:1.5rem auto"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="BOTTOM_LEADERBOARD_SLOT"></ins></div></div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="ad-sticky-sidebar">
+      <div class="ad-container ad-halfpage" style="margin-bottom:1rem"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_HALFPAGE_SLOT"></ins></div></div>
+      <div class="ad-container ad-medium" style="margin-bottom:1rem"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_MEDIUM_SLOT"></ins></div></div>
+      <div class="card" style="margin-bottom:1rem">
+        <h4 style="margin-top:0">Quick Reference</h4>
+        <ul style="list-style:none;margin:0;padding:0;font-size:.85rem">
+          <li style="margin-bottom:.5rem"><a href="#" onclick="showPage('how-it-works');return false">How It Works</a></li>
+          <li style="margin-bottom:.5rem"><a href="#" onclick="showPage('subnet-guide');return false">Subnetting Guide</a></li>
+          <li style="margin-bottom:.5rem"><a href="#" onclick="showPage('faq');return false">FAQ</a></li>
+          <li style="margin-bottom:.5rem"><a href="#" onclick="showPage('contact');return false">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="ad-container ad-medium"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="SIDEBAR_MEDIUM_2_SLOT"></ins></div></div>
+    </div>
+  </aside>
+</div>
+
+<div class="ad-anchor" id="adAnchor"><div class="ad-container ad-mobile-leader" style="margin:0 auto;border:none"><div style="width:100%"><div class="ad-label">Advertisement</div><ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="ANCHOR_MOBILE_SLOT"></ins></div></div></div>
+
+<footer>
+  <div class="footer-inner">
+    <div><h4>SubnetCalc Pro</h4><p style="color:#94a3b8;font-size:.85rem;line-height:1.6">Free professional-grade networking tools for IT professionals, network engineers, and students.</p></div>
+    <div><h4>Tools</h4><a href="#" onclick="showPage('home');return false">Subnet Calculator</a><a href="#" onclick="alert('Coming soon!');return false">Binary Calculator</a><a href="#" onclick="alert('Coming soon!');return false">IP Range Calculator</a><a href="#" onclick="alert('Coming soon!');return false">VLSM Calculator</a></div>
+    <div><h4>Resources</h4><a href="#" onclick="showPage('subnet-guide');return false">Subnetting Guide</a><a href="#" onclick="showPage('faq');return false">FAQ</a><a href="#" onclick="showPage('how-it-works');return false">How It Works</a><a href="#" onclick="showPage('contact');return false">Contact Us</a></div>
+    <div><h4>Legal</h4><a href="#" onclick="showPage('privacy');return false">Privacy Policy</a><a href="#" onclick="showPage('terms');return false">Terms of Service</a><a href="#" onclick="showPage('cookies');return false">Cookie Policy</a><a href="#" onclick="showPage('disclaimer');return false">Disclaimer</a></div>
+  </div>
+  <div class="copyright">&copy; 2026 SubnetCalc Pro. All rights reserved. Free subnet mask calculator for IPv4 networks.</div>
+</footer>
+
+<script>
+let showBinary = false;
+
+function ipToInt(ip) {
+  var p = ip.split('.');
+  return ((parseInt(p[0]) << 24) + (parseInt(p[1]) << 16) + (parseInt(p[2]) << 8) + parseInt(p[3])) >>> 0;
+}
+
+function intToIp(n) {
+  return ((n >>> 24) & 255) + '.' + ((n >>> 16) & 255) + '.' + ((n >>> 8) & 255) + '.' + (n & 255);
+}
+
+function intToBinary(n) {
+  return (n >>> 0).toString(2).padStart(32, '0');
+}
+
+function ipToBinary(ip) {
+  return ip.split('.').map(function(o) {
+    return parseInt(o).toString(2).padStart(8, '0');
+  }).join('.');
+}
+
+function cidrToMask(c) {
+  if (c === 0) return 0;
+  return ((4294967295 << (32 - c)) & 4294967295) >>> 0;
+}
+
+function maskToCidr(m) {
+  var c = 0;
+  while (m & 2147483648) {
+    c++;
+    m = (m << 1) & 4294967295;
+  }
+  return c;
+}
+
+function validateIP(ip) {
+  var p = ip.split('.');
+  if (p.length !== 4) return false;
+  return p.every(function(x) {
+    var n = parseInt(x);
+    return !isNaN(n) && n >= 0 && n <= 255 && x === String(n);
+  });
+}
+
+function validateMask(m) {
+  var p = m.split('.');
+  if (p.length !== 4) return false;
+  var b = p.map(function(x) {
+    return parseInt(x).toString(2).padStart(8, '0');
+  }).join('');
+  return /^1*0*$/.test(b);
+}
+
+function getIPClass(ip) {
+  var f = parseInt(ip.split('.')[0]);
+  if (f >= 1 && f <= 126) return 'A';
+  if (f >= 128 && f <= 191) return 'B';
+  if (f >= 192 && f <= 223) return 'C';
+  if (f >= 224 && f <= 239) return 'D (Multicast)';
+  if (f >= 240 && f <= 255) return 'E (Experimental)';
+  return 'Unknown';
+}
+
+function getIPProperties(ip, mi) {
+  var pr = [], f = parseInt(ip.split('.')[0]), s = parseInt(ip.split('.')[1]);
+  var ii = ipToInt(ip), ni = ii & mi, bi = ni | (~mi >>> 0);
+  if (f === 10 || (f === 172 && s >= 16 && s <= 31) || (f === 192 && s === 168)) {
+    pr.push({ label: 'Private (RFC 1918)', class: 'tag-private' });
+  } else {
+    pr.push({ label: 'Public', class: 'tag-public' });
+  }
+  if (f === 127) pr.push({ label: 'Loopback', class: 'tag-loopback' });
+  if (f === 169 && s === 254) pr.push({ label: 'Link-Local (APIPA)', class: 'tag-linklocal' });
+  if (f >= 224 && f <= 239) pr.push({ label: 'Multicast', class: 'tag-multicast' });
+  if (ii === ni) pr.push({ label: 'Network Address', class: 'tag-network' });
+  if (ii === bi) pr.push({ label: 'Broadcast Address', class: 'tag-network' });
+  if (ii === 0) pr.push({ label: 'Default Route', class: 'tag-default' });
+  return pr;
+}
+
+function getSubnetDivision(c, ic) {
+  var cm = { 'A': 8, 'B': 16, 'C': 24 }, dm = cm[ic] || 0;
+  if (c < dm) {
+    var b = dm - c, h = Math.pow(2, 32 - c);
+    return 'Supernetting: Borrowed <code>' + b + '</code> bit(s) from default class mask (/' + dm + ').<br>Aggregated network size: <code>' + h.toLocaleString() + '</code> total addresses.';
+  } else if (c > dm) {
+    var b = c - dm, sn = Math.pow(2, b), hp = Math.pow(2, 32 - c);
+    return 'Subnetting: Borrowed <code>' + b + '</code> host bit(s) from default class mask (/' + dm + ').<br>Possible subnets: <code>' + sn.toLocaleString() + '</code><br>Hosts per subnet: <code>' + hp.toLocaleString() + '</code> total / <code>' + Math.max(0, hp - 2).toLocaleString() + '</code> usable';
+  } else {
+    return 'Default classful mask (/' + dm + '). No subnetting or supernetting applied.';
+  }
+}
+
+function renderBitBreakdown(ii, c) {
+  var b = intToBinary(ii);
+  var rs = [document.getElementById('bitRow1'), document.getElementById('bitRow2'), document.getElementById('bitRow3'), document.getElementById('bitRow4')];
+  rs.forEach(function(r) { r.innerHTML = ''; });
+  for (var i = 0; i < 32; i++) {
+    var bit = b[i], isn = i < c;
+    var cell = document.createElement('td');
+    cell.textContent = bit;
+    cell.className = isn ? 'bit-network' : 'bit-host';
+    rs[Math.floor(i / 8)].appendChild(cell);
+  }
+}
+
+function toggleBinary() {
+  showBinary = !showBinary;
+  var el = document.getElementById('binaryDetails');
+  if (el) el.style.display = showBinary ? 'block' : 'none';
+}
+
+function pushAds() {
+  try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+}
+
+function calculate() {
+  var ipi = document.getElementById('ipInput').value.trim();
+  var cs = document.getElementById('cidrSelect');
+  var mi = document.getElementById('maskInput').value.trim();
+  var ea = document.getElementById('errorArea');
+  var ra = document.getElementById('resultsArea');
+
+  ea.style.display = 'none';
+  ea.textContent = '';
+
+  if (!validateIP(ipi)) {
+    ea.textContent = 'Invalid IP address. Use dotted decimal format (e.g., 192.168.1.1).';
+    ea.style.display = 'block';
+    ra.style.display = 'none';
+    return;
+  }
+
+  var cidr, maskInt;
+
+  if (mi && validateMask(mi)) {
+    maskInt = ipToInt(mi);
+    cidr = maskToCidr(maskInt);
+    cs.value = String(cidr);
+  } else if (cs.value) {
+    cidr = parseInt(cs.value);
+    maskInt = cidrToMask(cidr);
+    document.getElementById('maskInput').value = intToIp(maskInt);
+  } else {
+    ea.textContent = 'Please provide a valid subnet mask or CIDR prefix.';
+    ea.style.display = 'block';
+    ra.style.display = 'none';
+    return;
+  }
+
+  var ipInt = ipToInt(ipi);
+  var networkInt = ipInt & maskInt;
+  var broadcastInt = networkInt | (~maskInt >>> 0);
+  var wildcardInt = ~maskInt >>> 0;
+
+  var totalHosts = Math.pow(2, 32 - cidr);
+  var usableHosts = cidr >= 31 ? 0 : totalHosts - 2;
+
+  var firstHostInt = cidr >= 31 ? networkInt : networkInt + 1;
+  var lastHostInt = cidr >= 31 ? broadcastInt : broadcastInt - 1;
+
+  var ipClass = getIPClass(ipi);
+  var props = getIPProperties(ipi, maskInt);
+
+  document.getElementById('networkAddr').textContent = intToIp(networkInt);
+  document.getElementById('networkBinary').textContent = ipToBinary(intToIp(networkInt));
+  document.getElementById('broadcastAddr').textContent = intToIp(broadcastInt);
+  document.getElementById('broadcastBinary').textContent = ipToBinary(intToIp(broadcastInt));
+  document.getElementById('subnetMask').textContent = intToIp(maskInt);
+  document.getElementById('maskBinary').textContent = ipToBinary(intToIp(maskInt));
+  document.getElementById('wildcardMask').textContent = intToIp(wildcardInt);
+  document.getElementById('wildcardBinary').textContent = ipToBinary(intToIp(wildcardInt));
+  document.getElementById('firstHost').textContent = cidr >= 31 ? 'N/A' : intToIp(firstHostInt);
+  document.getElementById('firstHostBinary').textContent = cidr >= 31 ? '-' : ipToBinary(intToIp(firstHostInt));
+  document.getElementById('lastHost').textContent = cidr >= 31 ? 'N/A' : intToIp(lastHostInt);
+  document.getElementById('lastHostBinary').textContent = cidr >= 31 ? '-' : ipToBinary(intToIp(lastHostInt));
+
+  document.getElementById('totalHosts').textContent = totalHosts.toLocaleString();
+  document.getElementById('usableHosts').textContent = usableHosts.toLocaleString();
+  document.getElementById('ipClass').textContent = ipClass;
+  document.getElementById('networkBits').textContent = cidr;
+  document.getElementById('hostBits').textContent = 32 - cidr;
+  document.getElementById('subnetSize').textContent = '/' + cidr;
+
+  var propsContainer = document.getElementById('ipProperties');
+  propsContainer.innerHTML = props.map(function(p) {
+    return '<span class="tag ' + p.class + '">' + p.label + '</span>';
+  }).join('');
+
+  renderBitBreakdown(ipInt, cidr);
+  document.getElementById('subnetDivision').innerHTML = getSubnetDivision(cidr, ipClass.charAt(0));
+
+  var fields = [
+    { name: 'IP Address', val: ipInt },
+    { name: 'Subnet Mask', val: maskInt },
+    { name: 'Network Address', val: networkInt },
+    { name: 'Broadcast Address', val: broadcastInt },
+    { name: 'Wildcard Mask', val: wildcardInt },
+    { name: 'First Host', val: firstHostInt },
+    { name: 'Last Host', val: lastHostInt }
+  ];
+
+  document.getElementById('binaryTableBody').innerHTML = fields.map(function(f) {
+    var hex = '0x' + (f.val >>> 0).toString(16).toUpperCase().padStart(8, '0');
+    return '<tr><td>' + f.name + '</td><td>' + intToIp(f.val) + '</td><td>' + intToBinary(f.val) + '</td><td>' + hex + '</td></tr>';
+  }).join('');
+
+  ra.style.display = 'block';
+  pushAds();
+}
+
+function showPage(pageName) {
+  var sections = document.querySelectorAll('.page-section');
+  sections.forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('page-' + pageName).classList.add('active');
+
+  var links = document.querySelectorAll('.nav-link');
+  links.forEach(function(l) { l.classList.remove('active'); });
+  var activeLink = document.querySelector('.nav-link[data-page="' + pageName + '"]');
+  if (activeLink) activeLink.classList.add('active');
+
+  var bc = document.getElementById('breadcrumbs');
+  var pageTitles = {
+    'home': '<span>Home</span> &rsaquo; <span>Subnet Calculator</span>',
+    'how-it-works': '<span>Home</span> &rsaquo; <span>How It Works</span>',
+    'subnet-guide': '<span>Home</span> &rsaquo; <span>Subnetting Guide</span>',
+    'faq': '<span>Home</span> &rsaquo; <span>FAQ</span>',
+    'contact': '<span>Home</span> &rsaquo; <span>Contact Us</span>',
+    'privacy': '<span>Home</span> &rsaquo; <span>Privacy Policy</span>',
+    'terms': '<span>Home</span> &rsaquo; <span>Terms of Service</span>',
+    'cookies': '<span>Home</span> &rsaquo; <span>Cookie Policy</span>',
+    'disclaimer': '<span>Home</span> &rsaquo; <span>Disclaimer</span>'
+  };
+  if (bc && pageTitles[pageName]) bc.innerHTML = pageTitles[pageName];
+
+  window.scrollTo(0, 0);
+  pushAds();
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  alert('Thank you for your message! We will get back to you within 24-48 hours.');
+  e.target.reset();
+}
+
+document.getElementById('cidrSelect').addEventListener('change', function() {
+  var cidr = parseInt(this.value);
+  document.getElementById('maskInput').value = intToIp(cidrToMask(cidr));
+});
+
+document.getElementById('maskInput').addEventListener('input', function() {
+  if (validateMask(this.value)) {
+    var cidr = maskToCidr(ipToInt(this.value));
+    document.getElementById('cidrSelect').value = String(cidr);
+  }
+});
+
+document.getElementById('ipInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') calculate();
+});
+
+document.getElementById('maskInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') calculate();
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  calculate();
+  pushAds();
+  if (window.innerWidth >= 769) {
+    document.getElementById('ad-top-desktop').style.display = 'flex';
+  }
+  setTimeout(function() {
+    document.getElementById('adAnchor').classList.add('visible');
+    pushAds();
+  }, 3000);
+});
+</script>
+</body>
+</html>
